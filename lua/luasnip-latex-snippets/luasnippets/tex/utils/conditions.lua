@@ -8,6 +8,7 @@ local lsp_util = require("lspconfig.util")
 local function get_envs()
 	local client = lsp_util.get_active_client_by_name(0, "texlab")
 	local pos = vim.api.nvim_win_get_cursor(0)
+	local envs = {}
 	local params = {
 		command = 'texlab.findEnvironments',
 		arguments = {
@@ -22,9 +23,10 @@ local function get_envs()
 			if err then
 				error(tostring(err))
 			end
-			return result
+			envs = result
 		end, 0)
 	end
+	return envs
 end
 
 local function is_inside(envname)
